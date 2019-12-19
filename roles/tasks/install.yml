@@ -1,0 +1,52 @@
+-name: install mysql repo local
+ shell: sudo yum localinstall -y https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+ args:
+    chdir: "{{ rpm_dir }}"
+
+-name: install mysql
+yum: name=mysql-community-server 
+state: present
+
+-name: enable mysql
+shell: sudo systemctl enable mysqld
+
+-name: start mysql
+shell: sudo systemctl start mysqld
+
+-name: install keep-alive 
+yum: name=keepalived
+state: present
+
+-name: install expect
+yum: name=expect
+state: present
+
+-name: change mysql password
+script: mysql_user.sh
+
+-name: stop mysql
+shell: sudo systemctl stop mysqld
+
+-name: rename keepalived ori file 
+shell: mv /etc/keepalived/keepalived.conf /etc/keepalived/keepalived.conf.back
+
+-name: copy keepalived config file
+copy: src=keepalived.conf  dest=/etc/keepalived/keepalived.conf
+
+-name: enable keepalived
+shell: sudo systemctl enable keepalived
+
+-name: copy mysqlcheck file
+copy: src=mysqlcheck.sh dest=/etc/keepalived/mysqlcheck.sh
+
+-name: rename mysql ori file 
+shell: mv /etc/my.cnf /etc/my.cnf.back
+
+-name: copy mysql config file
+copy: src=my.cnf  dest=/etc/my.cnf
+
+
+
+
+
+
