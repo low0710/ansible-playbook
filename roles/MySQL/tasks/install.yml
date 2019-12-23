@@ -4,7 +4,7 @@
     chdir: "{{ rpm_dir }}"
 
 -name: install mysql
-yum: name=mysql-community-server 
+apt: name=mysql-community-server 
 state: present
 
 -name: enable mysql
@@ -18,7 +18,7 @@ yum: name=keepalived
 state: present
 
 -name: install expect
-yum: name=expect
+apt: name=expect
 state: present
 
 -name: change mysql password
