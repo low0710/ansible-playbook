@@ -1,5 +1,0 @@
--name: Install mysql
- hosts: all
- gather_facts: yes
- roles:
-  - MySQL
