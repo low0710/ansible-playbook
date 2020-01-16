@@ -1,9 +1,0 @@
--name: copy my.cnf 
-copy: src=my.cnf  dest=/etc/my.cnf owner=root group=root
-
--name: copy keepalived config
-copy: src=keepalived.conf dest=/etc/keepalived/keepalived.conf owner=root group=root
-
--name: copy script to keepalived
-copy: src=mysqlcheck.sh dest=/etc/keepalived/mysqlcheck.sh owner=root group=root
-
