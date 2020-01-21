@@ -1,37 +1,26 @@
-- name: install mysql repo local
- shell: sudo yum localinstall -y https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
- args:
-    chdir: "{{ rpm_dir }}"
-
-- name: install mysql
-yum: name=mysql-community-server 
-state: present
-
-- name: enable mysql
-shell: sudo systemctl enable mysqld
-
-- name: start mysql
-shell: sudo systemctl start mysqld
-
-- name: install keep-alive 
-yum: name=keepalived
-state: present
-
-- name: enable keep-alive
-shell: sudo systemctl enable keepalived 
-
-- name: "Compile keepalived service"
-  template: src=keepalived.conf.template dest="{{ KEEPALIVED_CONFIG_FILE_PATH | mandatory }}"
-  when: "'mysql_master' in group_names"
+ - name: Download repo
+   shell: sudo yum localinstall -y https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
 
 
-- name: "Start keepalived serivice"
-  systemd:
-    state: restarted
-    daemon_reload: yes
-    name: "{{ KEEPALIVED_SERVICE_NAME | mandatory }}"
-    enabled: yes
-  when: "'mysql_master' in group_names
+ - name: Install MySQL
+   shell: sudo yum install -y mysql-community-server
+
+ - name: Start MySQL
+   service: name=mysqld state=started enabled=true
+
+ - name: Install Keepalived
+   yum: name=keepalived state=installed
+
+ - name: Remove ori keepalived conf file
+   shell: mv /etc/keepalived/keepalived.conf /etc/keepalived/keepalived.conf.back
+   ignore_errors: yes
+
+ - name: Copy file
+   copy: src=roles/templates/keepalived.conf dest=/etc/keepalived/keepalived.conf
+
+ - name: Start Keepalived
+   service: name=keepalived state=started enabled=true
+
 
 
 
