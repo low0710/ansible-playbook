@@ -11,7 +11,7 @@ vrrp_instance VI_1 {
 
     virtual_router_id 88
     virtual_ipaddress {
-        10.62.122.8  # make sure the VIP is correct
+        {{ VIP }}  # make sure the VIP is correct
     }
 
     track_script {
