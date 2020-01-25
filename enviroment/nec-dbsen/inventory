@@ -1,6 +1,0 @@
-[mysql_master]
-10.130.217.88 ansible_ssh_user=root
-
-[mysql_slave]
-10.62.131.134 ansible_ssh_user=appadmin
-
