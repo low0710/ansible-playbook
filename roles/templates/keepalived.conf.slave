@@ -1,0 +1,20 @@
+vrrp_script chk_mysqld {
+    script "pidof mysqld"    #It will check mysqld service every 2 second
+    interval 2
+    weight 2
+}
+
+vrrp_instance VI_1 {
+    interface eth0
+    state BACKUP #MASTER or BACKUP
+    priority 99 # 101 on master, 100 on backup, 99 on 2nd backup and so on
+
+    virtual_router_id 88
+    virtual_ipaddress {
+        {{ VIP }}  # make sure the VIP is correct
+    }
+
+    track_script {
+        chk_mysqld
+    }
+}

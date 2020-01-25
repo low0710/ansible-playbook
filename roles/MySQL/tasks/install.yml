@@ -1,26 +1,54 @@
  - name: Download repo
    shell: sudo yum localinstall -y https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+   
+ - name: Install MySql
+   action: yum name={{ item }}
+   with_items:
+    - MySQL-python
+    - mysql
+    - mysql-community-server
 
+ - name: Compile mysql conf file 
+   template: src=my.cnf dest="{{ MYSQL_CONF_FILE | mandatory }}"
+   when: "'mysql' in group_names"
 
- - name: Install MySQL
-   shell: sudo yum install -y mysql-community-server
+ - name: Edit mysql conf file
+   lineinfile: dest="{{ MYSQL_CONF_FILE }}" regexp="^server-id" line="server-id=2"
+   when: "'mysql_slave' in group_names"
+
+ - name: install expect
+   yum: name=expect state=present
 
  - name: Start MySQL
    service: name=mysqld state=started enabled=true
 
+ - name: Change mysql root password
+   script: mysql_user.sh
+
+ - name: Create replica user
+   script: replica.sh
+   when: "'mysql_master' in group_names"
+ 
  - name: Install Keepalived
    yum: name=keepalived state=installed
 
- - name: Remove ori keepalived conf file
-   shell: mv /etc/keepalived/keepalived.conf /etc/keepalived/keepalived.conf.back
-   ignore_errors: yes
+ - name: Complile keepalived conf
+   template: src=keepalived.conf.master dest="{{ KEEPALIVED_CONFIG_FILE_PATH | mandatory }}"
+   when: "'mysql_master' in group_names" 
 
- - name: Copy file
-   copy: src=roles/templates/keepalived.conf dest=/etc/keepalived/keepalived.conf
+ - name: Complile keepalived conf slave
+   template: src=keepalived.conf.slave dest="{{ KEEPALIVED_CONFIG_FILE_PATH | mandatory }}"
+   when: "'mysql_slave' in group_names"
 
  - name: Start Keepalived
    service: name=keepalived state=started enabled=true
 
+
+
+
+
+
+ 
 
 
 

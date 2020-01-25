@@ -1,0 +1,4 @@
+KEEPALIVED_CONFIG_FILE_PATH: /etc/keepalived/keepalived.conf
+KEEPALIVED_SVC_NAME: keepalived
+VIP: 10.100.10.11
+MYSQL_CONF_FILE: /etc/my.cnf
