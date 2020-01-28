@@ -18,8 +18,9 @@ Run the command to install MySQL into server
 
 File need to update before execute :
 1. inventory
-2. mysql_user.sh ( Change the root user password )
-3. replica.sh ( Chnage the replica user login )
+2. allUpd
+3. mysql_user.sh ( Change the root user password )
+4. replica.sh ( Chnage the replica user login )
 
 After run the script , you need manually setup the slave server :
 1. Access into master serevr > login into Mysql command line> show Master status\G;
