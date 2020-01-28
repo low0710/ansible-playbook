@@ -14,7 +14,7 @@ This script using ansible playbook to setup MySQL Database and keepalived setup
 - sudo ssh-copy-id ${REMOTE_USER}@${REMOTE_IP}
 
 Run the command to install MySQL into server 
-- ansible-playbook -i enviroment/nec-dbsen/inventory --become mysql_master.yml
+- ansible-playbook -i enviroment/TestEnv/inventory --become mysql_master.yml
 
 File need to update before execute :
 1. inventory
