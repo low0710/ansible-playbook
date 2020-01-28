@@ -24,7 +24,7 @@ File need to update before execute :
 
 After run the script , you need manually setup the slave server :
 1. Access into master serevr > login into Mysql command line> show Master status\G;
-2. Record the 'File' $ 'Position' value.
+2. Record the 'File' & 'Position' value.
 3. Access into slave server > login into Mysql command line 
 4. Stop slave;
 5. CHANGE MASTER TO MASTER_HOST='192.168.121.59',MASTER_USER='replica',MASTER_PASSWORD='replica_password',MASTER_LOG_FILE='mysql-bin.000001',MASTER_LOG_POS=1427; 
