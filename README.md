@@ -18,7 +18,7 @@ Run the command to install MySQL into server
 
 File need to update before execute :
 1. inventory
-2. allUpd
+2. all
 3. mysql_user.sh ( Change the root user password )
 4. replica.sh ( Chnage the replica user login )
 
