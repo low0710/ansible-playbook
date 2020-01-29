@@ -1,6 +1,7 @@
 - name: Install mysql
   hosts: 
     - mysql_master
+    - mysql_slave
   gather_facts: no
   roles:
     - MySQL
